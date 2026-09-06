@@ -3,16 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой сайт на GitHub</title>
+    <title>Блог C++ и Математика</title>
     <style>
         body {
-            background-color: #1e88e5; /* Синий цвет фона */
-            color: white;             /* Белый цвет текста для контраста */
+            background-color: #1e293b; /* Приглушенный темно-синий фон */
+            color: #f8fafc;            /* Светлый текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Стиль контейнера вкладок */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid #334155;
+            margin-bottom: 20px;
+        }
+
+        /* Стиль кнопок вкладок */
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: #e2e8f0;
+        }
+
+        /* Активная вкладка */
+        .tab-btn.active {
+            color: #38bdf8;
+            border-bottom-color: #38bdf8;
+            font-weight: bold;
+        }
+
+        /* Содержимое вкладок */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <h1>Ура! Мой сайт работает!</h1>
-    <p>Это первая страница, которую я создал на GitHub Pages.</p>
+
+    <h1>Мой блог</h1>
+
+    <!-- Вкладки -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('cpp')">C++</button>
+        <button class="tab-btn" onclick="openTab('math')">Math</button>
+    </div>
+
+    <!-- Контент вкладки C++ -->
+    <div id="cpp" class="tab-content active">
+        <h2>Раздел C++</h2>
+        <p>Здесь будут статьи, задачи и заметки про C++.</p>
+    </div>
+
+    <!-- Контент вкладки Math -->
+    <div id="math" class="tab-content">
+        <h2>Раздел Математика</h2>
+        <p>Здесь будут материалы по олимпиадной математике и теории.</p>
+    </div>
+
+    <!-- Скрипт переключения вкладок -->
+    <script>
+        function openTab(tabName) {
+            // Скрываем все вкладки
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Убираем активный класс у всех кнопок
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Показываем выбранную вкладку и выделяем кнопку
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
