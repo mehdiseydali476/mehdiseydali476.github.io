@@ -6,45 +6,93 @@
     <title>Блог C++ и Математика</title>
     <style>
         body {
-            background-color: #1e293b; /* Приглушенный темно-синий фон */
-            color: #f8fafc;            /* Светлый текст */
+            background-color: #1e293b;
+            color: #f8fafc;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
         }
 
-        /* Стиль контейнера вкладок */
-        .tabs {
+        /* Шапка с заголовком и меню справа */
+        .header {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 2px solid #334155;
+            padding-bottom: 15px;
             margin-bottom: 20px;
+            position: relative;
         }
 
-        /* Стиль кнопок вкладок */
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Кнопка 3 полоски (гамбургер) */
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #38bdf8;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* Выпадающее меню вкладок */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            min-width: 140px;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Пункты меню */
         .tab-btn {
             background: none;
             border: none;
             color: #94a3b8;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
+            text-align: left;
+            transition: background 0.2s, color 0.2s;
         }
 
         .tab-btn:hover {
+            background-color: #1e293b;
             color: #e2e8f0;
         }
 
-        /* Активная вкладка */
         .tab-btn.active {
             color: #38bdf8;
-            border-bottom-color: #38bdf8;
             font-weight: bold;
+            background-color: #1e293b;
         }
 
-        /* Содержимое вкладок */
+        /* Контент вкладок */
         .tab-content {
             display: none;
         }
@@ -56,40 +104,64 @@
 </head>
 <body>
 
-    <h1>Мой блог</h1>
+    <div class="header">
+        <h1>Мой блог</h1>
+        
+        <!-- Иконка из 3 полосок -->
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
-    <!-- Вкладки -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab('cpp')">C++</button>
-        <button class="tab-btn" onclick="openTab('math')">Math</button>
+        <!-- Выпадающее меню -->
+        <div id="dropdownMenu" class="dropdown-menu">
+            <button class="tab-btn active" onclick="openTab(event, 'cpp')">C++</button>
+            <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
+        </div>
     </div>
 
-    <!-- Контент вкладки C++ -->
+    <!-- Контент C++ -->
     <div id="cpp" class="tab-content active">
         <h2>Раздел C++</h2>
         <p>Здесь будут статьи, задачи и заметки про C++.</p>
     </div>
 
-    <!-- Контент вкладки Math -->
+    <!-- Контент Math -->
     <div id="math" class="tab-content">
         <h2>Раздел Математика</h2>
         <p>Здесь будут материалы по олимпиадной математике и теории.</p>
     </div>
 
-    <!-- Скрипт переключения вкладок -->
     <script>
-        function openTab(tabName) {
-            // Скрываем все вкладки
+        // Открытие/закрытие меню при клике на 3 полоски
+        function toggleMenu() {
+            document.getElementById('dropdownMenu').classList.toggle('show');
+        }
+
+        // Переключение вкладок
+        function openTab(evt, tabName) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
 
-            // Убираем активный класс у всех кнопок
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(button => button.classList.remove('active'));
 
-            // Показываем выбранную вкладку и выделяем кнопку
             document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
+            evt.currentTarget.classList.add('active');
+
+            // Закрываем меню после выбора
+            document.getElementById('dropdownMenu').classList.remove('show');
+        }
+
+        // Закрывать меню при клике мимо него
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-icon') && !event.target.matches('.menu-icon span')) {
+                const dropdown = document.getElementById('dropdownMenu');
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
         }
     </script>
 
