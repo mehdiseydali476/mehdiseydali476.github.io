@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Блог C++ и Математика</title>
+    <title>C++ & Math Blog</title>
     <style>
         body {
             background-color: #1e293b;
@@ -13,7 +13,7 @@
             padding: 20px;
         }
 
-        /* Шапка с заголовком и меню справа */
+        /* Header layout with title and menu on the right */
         .header {
             display: flex;
             justify-content: space-between;
@@ -29,7 +29,7 @@
             font-size: 24px;
         }
 
-        /* Кнопка 3 полоски (гамбургер) */
+        /* Hamburger menu icon (3 bars) */
         .menu-icon {
             display: flex;
             flex-direction: column;
@@ -49,7 +49,7 @@
             transition: 0.3s;
         }
 
-        /* Выпадающее меню вкладок */
+        /* Dropdown menu */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -69,7 +69,7 @@
             flex-direction: column;
         }
 
-        /* Пункты меню */
+        /* Menu buttons */
         .tab-btn {
             background: none;
             border: none;
@@ -92,7 +92,7 @@
             background-color: #1e293b;
         }
 
-        /* Контент вкладок */
+        /* Tab contents */
         .tab-content {
             display: none;
         }
@@ -105,41 +105,41 @@
 <body>
 
     <div class="header">
-        <h1>Мой блог</h1>
+        <h1>My Blog</h1>
         
-        <!-- Иконка из 3 полосок -->
+        <!-- Hamburger Menu Icon -->
         <div class="menu-icon" onclick="toggleMenu()">
             <span></span>
             <span></span>
             <span></span>
         </div>
 
-        <!-- Выпадающее меню -->
+        <!-- Dropdown Menu -->
         <div id="dropdownMenu" class="dropdown-menu">
             <button class="tab-btn active" onclick="openTab(event, 'cpp')">C++</button>
             <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
         </div>
     </div>
 
-    <!-- Контент C++ -->
+    <!-- C++ Content -->
     <div id="cpp" class="tab-content active">
-        <h2>Раздел C++</h2>
-        <p>Здесь будут статьи, задачи и заметки про C++.</p>
+        <h2>C++ Section</h2>
+        <p>Articles, competitive programming problems, and C++ notes will be published here.</p>
     </div>
 
-    <!-- Контент Math -->
+    <!-- Math Content -->
     <div id="math" class="tab-content">
-        <h2>Раздел Математика</h2>
-        <p>Здесь будут материалы по олимпиадной математике и теории.</p>
+        <h2>Math Section</h2>
+        <p>Olympiad mathematics materials, theories, and problem breakdowns will be published here.</p>
     </div>
 
     <script>
-        // Открытие/закрытие меню при клике на 3 полоски
+        // Toggle dropdown menu
         function toggleMenu() {
             document.getElementById('dropdownMenu').classList.toggle('show');
         }
 
-        // Переключение вкладок
+        // Switch tabs
         function openTab(evt, tabName) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
@@ -150,11 +150,11 @@
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
 
-            // Закрываем меню после выбора
+            // Close menu after selection
             document.getElementById('dropdownMenu').classList.remove('show');
         }
 
-        // Закрывать меню при клике мимо него
+        // Close menu when clicking outside
         window.onclick = function(event) {
             if (!event.target.matches('.menu-icon') && !event.target.matches('.menu-icon span')) {
                 const dropdown = document.getElementById('dropdownMenu');
