@@ -96,11 +96,19 @@
       display: block;
     }
 
+    /* Сетка из 5 колонок */
     .pdf-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 15px;
       margin-top: 20px;
+    }
+
+    /* Адаптивность для узких экранов */
+    @media (max-width: 1024px) {
+      .pdf-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      }
     }
 
     .pdf-card {
@@ -160,19 +168,24 @@
       background-color: #1e293b;
       transform: scale(1.02);
     }
+
+    .math-card-desc {
+      margin: 0;
+      font-size: 12px;
+      color: #cbd5e1;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
   <div class="header">
     <h1>My Website</h1>
-    
     <div class="menu-icon" onclick="toggleMenu()">
       <span></span>
       <span></span>
       <span></span>
     </div>
-
     <div id="dropdownMenu" class="dropdown-menu">
       <button type="button" class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
       <button type="button" class="tab-btn" onclick="openTab(event, 'math')">Math</button>
@@ -187,9 +200,36 @@
 
   <div id="math" class="tab-content">
     <h2>Math Page</h2>
-    <p>Welcome to the math section.</p>
+    <p>Выберите раздел или добавьте PDF:</p>
+    
     <input type="file" id="mathPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'math')">
+    
+    <!-- 4 карточки раздела + кнопка "+" идут в один ряд из 5 блоков -->
     <div id="mathGrid" class="pdf-grid">
+      <a href="geometry.html" class="pdf-card">
+        <div class="pdf-icon">📐</div>
+        <div class="pdf-name">Геометрия</div>
+        <p class="math-card-desc">Фигуры и теоремы</p>
+      </a>
+
+      <a href="number-theory.html" class="pdf-card">
+        <div class="pdf-icon">🔢</div>
+        <div class="pdf-name">Теория чисел</div>
+        <p class="math-card-desc">Делимость и числа</p>
+      </a>
+
+      <a href="combinatorics.html" class="pdf-card">
+        <div class="pdf-icon">📊</div>
+        <div class="pdf-name">Комбинаторика</div>
+        <p class="math-card-desc">Перестановки и графы</p>
+      </a>
+
+      <a href="algebra.html" class="pdf-card">
+        <div class="pdf-icon">🧮</div>
+        <div class="pdf-name">Алгебра</div>
+        <p class="math-card-desc">Уравнения и функции</p>
+      </a>
+
       <button type="button" id="mathAddBtn" class="add-btn" onclick="triggerUpload('mathPdfInput')">+</button>
     </div>
   </div>
@@ -224,7 +264,6 @@
 
       document.getElementById(tabName).classList.add('active');
       evt.currentTarget.classList.add('active');
-
       document.getElementById('dropdownMenu').classList.remove('show');
     }
 
@@ -241,17 +280,14 @@
       const file = event.target.files[0];
       if (file && file.type === 'application/pdf') {
         const reader = new FileReader();
-        
         reader.onload = function(e) {
           const fileData = {
             name: file.name,
             url: e.target.result
           };
-          
           savePdfToStorage(section, fileData);
           renderPdfCard(section, fileData);
         };
-
         reader.readAsDataURL(file);
         event.target.value = '';
       }
@@ -304,6 +340,5 @@
       }
     }
   </script>
-
 </body>
 </html>
