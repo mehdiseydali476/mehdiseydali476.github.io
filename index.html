@@ -96,7 +96,6 @@
       display: block;
     }
 
-    /* Сетка из 5 колонок */
     .pdf-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -104,7 +103,6 @@
       margin-top: 20px;
     }
 
-    /* Адаптивность для узких экранов */
     @media (max-width: 1024px) {
       .pdf-grid {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -200,34 +198,33 @@
 
   <div id="math" class="tab-content">
     <h2>Math Page</h2>
-    <p>Выберите раздел или добавьте PDF:</p>
+    <p>Select a section or add a PDF:</p>
     
     <input type="file" id="mathPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'math')">
     
-    <!-- 4 карточки раздела + кнопка "+" идут в один ряд из 5 блоков -->
     <div id="mathGrid" class="pdf-grid">
       <a href="geometry.html" class="pdf-card">
         <div class="pdf-icon">📐</div>
-        <div class="pdf-name">Геометрия</div>
-        <p class="math-card-desc">Фигуры и теоремы</p>
+        <div class="pdf-name">Geometry</div>
+        <p class="math-card-desc">Shapes and theorems</p>
       </a>
 
       <a href="number-theory.html" class="pdf-card">
         <div class="pdf-icon">🔢</div>
-        <div class="pdf-name">Теория чисел</div>
-        <p class="math-card-desc">Делимость и числа</p>
+        <div class="pdf-name">Number Theory</div>
+        <p class="math-card-desc">Divisibility and primes</p>
       </a>
 
       <a href="combinatorics.html" class="pdf-card">
         <div class="pdf-icon">📊</div>
-        <div class="pdf-name">Комбинаторика</div>
-        <p class="math-card-desc">Перестановки и графы</p>
+        <div class="pdf-name">Combinatorics</div>
+        <p class="math-card-desc">Permutations and graphs</p>
       </a>
 
       <a href="algebra.html" class="pdf-card">
         <div class="pdf-icon">🧮</div>
-        <div class="pdf-name">Алгебра</div>
-        <p class="math-card-desc">Уравнения и функции</p>
+        <div class="pdf-name">Algebra</div>
+        <p class="math-card-desc">Equations and functions</p>
       </a>
 
       <button type="button" id="mathAddBtn" class="add-btn" onclick="triggerUpload('mathPdfInput')">+</button>
@@ -322,7 +319,7 @@
       try {
         localStorage.setItem(section + '_pdfs', JSON.stringify(saved));
       } catch (e) {
-        alert("File size exceeds local storage memory limit.");
+        alert("File size exceeds browser storage limit.");
       }
     }
 
