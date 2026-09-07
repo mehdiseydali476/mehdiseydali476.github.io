@@ -188,7 +188,7 @@
   <div id="math" class="tab-content">
     <h2>Math Page</h2>
     <p>Welcome to the math section.</p>
-    <input type="file" id="mathPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'mathGrid', 'mathAddBtn')">
+    <input type="file" id="mathPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'math')">
     <div id="mathGrid" class="pdf-grid">
       <button type="button" id="mathAddBtn" class="add-btn" onclick="triggerUpload('mathPdfInput')">+</button>
     </div>
@@ -197,7 +197,7 @@
   <div id="cpp" class="tab-content">
     <h2>C++ Page</h2>
     <p>Welcome to the C++ section.</p>
-    <input type="file" id="cppPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'cppGrid', 'cppAddBtn')">
+    <input type="file" id="cppPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'cpp')">
     <div id="cppGrid" class="pdf-grid">
       <button type="button" id="cppAddBtn" class="add-btn" onclick="triggerUpload('cppPdfInput')">+</button>
     </div>
@@ -205,6 +205,11 @@
 
   <script>
     const UPLOAD_PASSWORD = "343216125";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSavedPdfs('math');
+      loadSavedPdfs('cpp');
+    });
 
     function toggleMenu() {
       document.getElementById('dropdownMenu').classList.toggle('show');
@@ -232,32 +237,62 @@
       }
     }
 
-    function handleFileUpload(event, gridId, addBtnId) {
+    function handleFileUpload(event, section) {
       const file = event.target.files[0];
       if (file && file.type === 'application/pdf') {
-        const fileUrl = URL.createObjectURL(file);
-        const grid = document.getElementById(gridId);
-        const addBtn = document.getElementById(addBtnId);
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          const fileData = {
+            name: file.name,
+            url: e.target.result
+          };
+          
+          savePdfToStorage(section, fileData);
+          renderPdfCard(section, fileData);
+        };
 
-        const card = document.createElement('a');
-        card.className = 'pdf-card';
-        card.href = fileUrl;
-        card.target = '_blank';
-
-        const icon = document.createElement('div');
-        icon.className = 'pdf-icon';
-        icon.textContent = '📄';
-
-        const name = document.createElement('div');
-        name.className = 'pdf-name';
-        name.textContent = file.name;
-
-        card.appendChild(icon);
-        card.appendChild(name);
-
-        grid.insertBefore(card, addBtn);
+        reader.readAsDataURL(file);
         event.target.value = '';
       }
+    }
+
+    function renderPdfCard(section, fileData) {
+      const grid = document.getElementById(section + 'Grid');
+      const addBtn = document.getElementById(section + 'AddBtn');
+
+      const card = document.createElement('a');
+      card.className = 'pdf-card';
+      card.href = fileData.url;
+      card.target = '_blank';
+
+      const icon = document.createElement('div');
+      icon.className = 'pdf-icon';
+      icon.textContent = '📄';
+
+      const name = document.createElement('div');
+      name.className = 'pdf-name';
+      name.textContent = fileData.name;
+
+      card.appendChild(icon);
+      card.appendChild(name);
+
+      grid.insertBefore(card, addBtn);
+    }
+
+    function savePdfToStorage(section, fileData) {
+      let saved = JSON.parse(localStorage.getItem(section + '_pdfs') || '[]');
+      saved.push(fileData);
+      try {
+        localStorage.setItem(section + '_pdfs', JSON.stringify(saved));
+      } catch (e) {
+        alert("File size exceeds local storage memory limit.");
+      }
+    }
+
+    function loadSavedPdfs(section) {
+      let saved = JSON.parse(localStorage.getItem(section + '_pdfs') || '[]');
+      saved.forEach(fileData => renderPdfCard(section, fileData));
     }
 
     window.onclick = function(event) {
