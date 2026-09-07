@@ -1,9 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ & Math Blog</title>
+  <style>
+    body {
+      background-color: #1e293b;
+      color: #f8fafc;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* Header layout */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #334155;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    /* Hamburger menu icon */
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 20px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: #38bdf8;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Dropdown menu */
+    .dropdown-menu {
+      display: noneЧтобы добавить отдельную вкладку или страницу **Home**, вам нужно внести изменения в три места вашего HTML-файла: добавить кнопку в меню, создав соответствующий блок с контентом и сделав его активным по умолчанию.
+
+Ниже обновленный код вашего файла [`index.html`](https://github.com/mehdiseydali476/mehdiseydali476.github.io/blob/main/index.html):
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C++ & Math Blog</title>
+    <title>My Blog</title>
     <style>
         body {
             background-color: #1e293b;
@@ -116,13 +174,20 @@
 
         <!-- Dropdown Menu -->
         <div id="dropdownMenu" class="dropdown-menu">
-            <button class="tab-btn active" onclick="openTab(event, 'cpp')">C++</button>
+            <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
+            <button class="tab-btn" onclick="openTab(event, 'cpp')">C++</button>
             <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
         </div>
     </div>
 
+    <!-- Home Content -->
+    <div id="home" class="tab-content active">
+        <h2>Welcome to My Blog</h2>
+        <p>This is the main page. Here you will find general announcements and recent updates about C++ and Mathematics.</p>
+    </div>
+
     <!-- C++ Content -->
-    <div id="cpp" class="tab-content active">
+    <div id="cpp" class="tab-content">
         <h2>C++ Section</h2>
         <p>Articles, competitive programming problems, and C++ notes will be published here.</p>
     </div>
