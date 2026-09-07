@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Геометрия</title>
+  <title>Geometry</title>
   <style>
     body {
       background-color: #1e293b;
@@ -118,11 +118,11 @@
 <body>
 
   <div class="header">
-    <h1>📐 Геометрия</h1>
-    <a href="index.html" class="back-btn">← На главную</a>
+    <h1>📐 Geometry</h1>
+    <a href="index.html" class="back-btn">← Back to Main</a>
   </div>
 
-  <p>Загруженные PDF по геометрии:</p>
+  <p>Uploaded PDFs for Geometry:</p>
 
   <input type="file" id="geometryPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'geometry')">
   <div id="geometryGrid" class="pdf-grid">
@@ -137,11 +137,11 @@
     });
 
     function triggerUpload(inputId) {
-      const password = prompt("Введите пароль для загрузки PDF:");
+      const password = prompt("Enter password to upload PDF:");
       if (password === UPLOAD_PASSWORD) {
         document.getElementById(inputId).click();
       } else if (password !== null) {
-        alert("Неверный пароль!");
+        alert("Incorrect password!");
       }
     }
 
@@ -191,7 +191,7 @@
       try {
         localStorage.setItem(section + '_pdfs', JSON.stringify(saved));
       } catch (e) {
-        alert("Размер файла превышает лимит памяти браузера.");
+        alert("File size exceeds browser storage limit.");
       }
     }
 
