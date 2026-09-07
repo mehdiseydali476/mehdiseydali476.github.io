@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>C++ & Math Blog</title>
+  <title>Website</title>
   <style>
     body {
       background-color: #1e293b;
@@ -13,7 +13,6 @@
       padding: 20px;
     }
 
-    /* Шапка сайта */
     .header {
       display: flex;
       justify-content: space-between;
@@ -29,7 +28,6 @@
       font-size: 24px;
     }
 
-    /* Иконка трех полосок (гамбургер-меню) */
     .menu-icon {
       display: flex;
       flex-direction: column;
@@ -49,7 +47,6 @@
       transition: 0.3s;
     }
 
-    /* Выпадающее меню */
     .dropdown-menu {
       display: none;
       position: absolute;
@@ -69,7 +66,6 @@
       flex-direction: column;
     }
 
-    /* Кнопки в меню */
     .tab-btn {
       background: none;
       border: none;
@@ -92,7 +88,6 @@
       background-color: #1e293b;
     }
 
-    /* Контент вкладок */
     .tab-content {
       display: none;
     }
@@ -100,21 +95,80 @@
     .tab-content.active {
       display: block;
     }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .pdf-card {
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      height: 220px;
+    }
+
+    .pdf-card embed {
+      width: 100%;
+      height: 150px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .pdf-card a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .pdf-card a:hover {
+      text-decoration: underline;
+    }
+
+    .add-btn {
+      background-color: #0f172a;
+      border: 2px dashed #38bdf8;
+      color: #38bdf8;
+      border-radius: 8px;
+      height: 220px;
+      font-size: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .add-btn:hover {
+      background-color: #1e293b;
+      transform: scale(1.02);
+    }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>My Blog</h1>
+    <h1>My Website</h1>
     
-    <!-- Иконка из 3 полосок -->
     <div class="menu-icon" onclick="toggleMenu()">
       <span></span>
       <span></span>
       <span></span>
     </div>
 
-    <!-- Выпадающее меню -->
     <div id="dropdownMenu" class="dropdown-menu">
       <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
       <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
@@ -122,29 +176,36 @@
     </div>
   </div>
 
-  <!-- Содержимое страниц -->
   <div id="home" class="tab-content active">
-    <h2>Welcome to Home Page</h2>
-    <p>Это главная страница, которая открывается по умолчанию при заходе на сайт.</p>
+    <h2>Home Page</h2>
+    <p>Welcome to the home page.</p>
   </div>
 
   <div id="math" class="tab-content">
-    <h2>Math Section</h2>
-    <p>Здесь будут размещаться материалы, формулы и задачи по математике.</p>
+    <h2>Math Page</h2>
+    <p>Welcome to the math section.</p>
+    <input type="file" id="mathPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'mathGrid', 'mathAddBtn')">
+    <div id="mathGrid" class="pdf-grid">
+      <button id="mathAddBtn" class="add-btn" onclick="triggerUpload('mathPdfInput')">+</button>
+    </div>
   </div>
 
   <div id="cpp" class="tab-content">
-    <h2>C++ Section</h2>
-    <p>Здесь будут статьи, заметки и задачи по программированию на C++.</p>
+    <h2>C++ Page</h2>
+    <p>Welcome to the C++ section.</p>
+    <input type="file" id="cppPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'cppGrid', 'cppAddBtn')">
+    <div id="cppGrid" class="pdf-grid">
+      <button id="cppAddBtn" class="add-btn" onclick="triggerUpload('cppPdfInput')">+</button>
+    </div>
   </div>
 
   <script>
-    // Открытие и закрытие меню по клику на полоски
+    const UPLOAD_PASSWORD = "343216125";
+
     function toggleMenu() {
       document.getElementById('dropdownMenu').classList.toggle('show');
     }
 
-    // Переключение вкладок
     function openTab(evt, tabName) {
       const contents = document.querySelectorAll('.tab-content');
       contents.forEach(content => content.classList.remove('active'));
@@ -155,11 +216,45 @@
       document.getElementById(tabName).classList.add('active');
       evt.currentTarget.classList.add('active');
 
-      // Закрываем меню после выбора пункта
       document.getElementById('dropdownMenu').classList.remove('show');
     }
 
-    // Закрытие меню при клике вне его области
+    function triggerUpload(inputId) {
+      const password = prompt("Enter password to upload PDF:");
+      if (password === UPLOAD_PASSWORD) {
+        document.getElementById(inputId).click();
+      } else if (password !== null) {
+        alert("Incorrect password!");
+      }
+    }
+
+    function handleFileUpload(event, gridId, addBtnId) {
+      const file = event.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        const fileUrl = URL.createObjectURL(file);
+        const grid = document.getElementById(gridId);
+        const addBtn = document.getElementById(addBtnId);
+
+        const card = document.createElement('div');
+        card.className = 'pdf-card';
+
+        const embed = document.createElement('embed');
+        embed.src = fileUrl;
+        embed.type = 'application/pdf';
+
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.target = '_blank';
+        link.textContent = file.name;
+
+        card.appendChild(embed);
+        card.appendChild(link);
+
+        grid.insertBefore(card, addBtn);
+        event.target.value = '';
+      }
+    }
+
     window.onclick = function(event) {
       if (!event.target.matches('.menu-icon') && !event.target.matches('.menu-icon span')) {
         const dropdown = document.getElementById('dropdownMenu');
