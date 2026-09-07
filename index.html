@@ -107,35 +107,38 @@
       background-color: #0f172a;
       border: 1px solid #334155;
       border-radius: 8px;
-      padding: 10px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 10px;
-      height: 220px;
-    }
-
-    .pdf-card embed {
-      width: 100%;
-      height: 150px;
-      border: none;
-      border-radius: 4px;
-    }
-
-    .pdf-card a {
-      color: #38bdf8;
+      height: 190px;
       text-decoration: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .pdf-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    .pdf-icon {
+      font-size: 48px;
+    }
+
+    .pdf-name {
+      color: #38bdf8;
       font-size: 14px;
       font-weight: bold;
       text-align: center;
-      white-space: nowrap;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
       width: 100%;
-    }
-
-    .pdf-card a:hover {
-      text-decoration: underline;
     }
 
     .add-btn {
@@ -143,13 +146,14 @@
       border: 2px dashed #38bdf8;
       color: #38bdf8;
       border-radius: 8px;
-      height: 220px;
+      height: 190px;
       font-size: 40px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: background-color 0.2s, transform 0.2s;
+      box-sizing: border-box;
     }
 
     .add-btn:hover {
@@ -170,9 +174,9 @@
     </div>
 
     <div id="dropdownMenu" class="dropdown-menu">
-      <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
-      <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
-      <button class="tab-btn" onclick="openTab(event, 'cpp')">C++</button>
+      <button type="button" class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
+      <button type="button" class="tab-btn" onclick="openTab(event, 'math')">Math</button>
+      <button type="button" class="tab-btn" onclick="openTab(event, 'cpp')">C++</button>
     </div>
   </div>
 
@@ -186,7 +190,7 @@
     <p>Welcome to the math section.</p>
     <input type="file" id="mathPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'mathGrid', 'mathAddBtn')">
     <div id="mathGrid" class="pdf-grid">
-      <button id="mathAddBtn" class="add-btn" onclick="triggerUpload('mathPdfInput')">+</button>
+      <button type="button" id="mathAddBtn" class="add-btn" onclick="triggerUpload('mathPdfInput')">+</button>
     </div>
   </div>
 
@@ -195,7 +199,7 @@
     <p>Welcome to the C++ section.</p>
     <input type="file" id="cppPdfInput" accept="application/pdf" style="display: none;" onchange="handleFileUpload(event, 'cppGrid', 'cppAddBtn')">
     <div id="cppGrid" class="pdf-grid">
-      <button id="cppAddBtn" class="add-btn" onclick="triggerUpload('cppPdfInput')">+</button>
+      <button type="button" id="cppAddBtn" class="add-btn" onclick="triggerUpload('cppPdfInput')">+</button>
     </div>
   </div>
 
@@ -235,20 +239,21 @@
         const grid = document.getElementById(gridId);
         const addBtn = document.getElementById(addBtnId);
 
-        const card = document.createElement('div');
+        const card = document.createElement('a');
         card.className = 'pdf-card';
+        card.href = fileUrl;
+        card.target = '_blank';
 
-        const embed = document.createElement('embed');
-        embed.src = fileUrl;
-        embed.type = 'application/pdf';
+        const icon = document.createElement('div');
+        icon.className = 'pdf-icon';
+        icon.textContent = '📄';
 
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.target = '_blank';
-        link.textContent = file.name;
+        const name = document.createElement('div');
+        name.className = 'pdf-name';
+        name.textContent = file.name;
 
-        card.appendChild(embed);
-        card.appendChild(link);
+        card.appendChild(icon);
+        card.appendChild(name);
 
         grid.insertBefore(card, addBtn);
         event.target.value = '';
