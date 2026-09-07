@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
       padding: 20px;
     }
 
-    /* Header layout */
+    /* Шапка сайта */
     .header {
       display: flex;
       justify-content: space-between;
@@ -29,7 +29,7 @@
       font-size: 24px;
     }
 
-    /* Hamburger menu icon */
+    /* Иконка трех полосок (гамбургер-меню) */
     .menu-icon {
       display: flex;
       flex-direction: column;
@@ -49,186 +49,126 @@
       transition: 0.3s;
     }
 
-    /* Dropdown menu */
+    /* Выпадающее меню */
     .dropdown-menu {
-      display: noneЧтобы добавить отдельную вкладку или страницу **Home**, вам нужно внести изменения в три места вашего HTML-файла: добавить кнопку в меню, создав соответствующий блок с контентом и сделав его активным по умолчанию.
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50px;
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      min-width: 140px;
+    }
 
-Ниже обновленный код вашего файла [`index.html`](https://github.com/mehdiseydali476/mehdiseydali476.github.io/blob/main/index.html):
+    .dropdown-menu.show {
+      display: flex;
+      flex-direction: column;
+    }
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
-    <style>
-        body {
-            background-color: #1e293b;
-            color: #f8fafc;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+    /* Кнопки в меню */
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s, color 0.2s;
+    }
 
-        /* Header layout with title and menu on the right */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            position: relative;
-        }
+    .tab-btn:hover {
+      background-color: #1e293b;
+      color: #e2e8f0;
+    }
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+    .tab-btn.active {
+      color: #38bdf8;
+      font-weight: bold;
+      background-color: #1e293b;
+    }
 
-        /* Hamburger menu icon (3 bars) */
-        .menu-icon {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 26px;
-            height: 20px;
-            cursor: pointer;
-            padding: 5px;
-        }
+    /* Контент вкладок */
+    .tab-content {
+      display: none;
+    }
 
-        .menu-icon span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background-color: #38bdf8;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-
-        /* Dropdown menu */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 50px;
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-            min-width: 140px;
-        }
-
-        .dropdown-menu.show {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Menu buttons */
-        .tab-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: left;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .tab-btn:hover {
-            background-color: #1e293b;
-            color: #e2e8f0;
-        }
-
-        .tab-btn.active {
-            color: #38bdf8;
-            font-weight: bold;
-            background-color: #1e293b;
-        }
-
-        /* Tab contents */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-    </style>
+    .tab-content.active {
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>My Blog</h1>
-        
-        <!-- Hamburger Menu Icon -->
-        <div class="menu-icon" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <!-- Dropdown Menu -->
-        <div id="dropdownMenu" class="dropdown-menu">
-            <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
-            <button class="tab-btn" onclick="openTab(event, 'cpp')">C++</button>
-            <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
-        </div>
+  <div class="header">
+    <h1>My Blog</h1>
+    
+    <!-- Иконка из 3 полосок -->
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
 
-    <!-- Home Content -->
-    <div id="home" class="tab-content active">
-        <h2>Welcome to My Blog</h2>
-        <p>This is the main page. Here you will find general announcements and recent updates about C++ and Mathematics.</p>
+    <!-- Выпадающее меню -->
+    <div id="dropdownMenu" class="dropdown-menu">
+      <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
+      <button class="tab-btn" onclick="openTab(event, 'math')">Math</button>
+      <button class="tab-btn" onclick="openTab(event, 'cpp')">C++</button>
     </div>
+  </div>
 
-    <!-- C++ Content -->
-    <div id="cpp" class="tab-content">
-        <h2>C++ Section</h2>
-        <p>Articles, competitive programming problems, and C++ notes will be published here.</p>
-    </div>
+  <!-- Содержимое страниц -->
+  <div id="home" class="tab-content active">
+    <h2>Welcome to Home Page</h2>
+    <p>Это главная страница, которая открывается по умолчанию при заходе на сайт.</p>
+  </div>
 
-    <!-- Math Content -->
-    <div id="math" class="tab-content">
-        <h2>Math Section</h2>
-        <p>Olympiad mathematics materials, theories, and problem breakdowns will be published here.</p>
-    </div>
+  <div id="math" class="tab-content">
+    <h2>Math Section</h2>
+    <p>Здесь будут размещаться материалы, формулы и задачи по математике.</p>
+  </div>
 
-    <script>
-        // Toggle dropdown menu
-        function toggleMenu() {
-            document.getElementById('dropdownMenu').classList.toggle('show');
+  <div id="cpp" class="tab-content">
+    <h2>C++ Section</h2>
+    <p>Здесь будут статьи, заметки и задачи по программированию на C++.</p>
+  </div>
+
+  <script>
+    // Открытие и закрытие меню по клику на полоски
+    function toggleMenu() {
+      document.getElementById('dropdownMenu').classList.toggle('show');
+    }
+
+    // Переключение вкладок
+    function openTab(evt, tabName) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(button => button.classList.remove('active'));
+
+      document.getElementById(tabName).classList.add('active');
+      evt.currentTarget.classList.add('active');
+
+      // Закрываем меню после выбора пункта
+      document.getElementById('dropdownMenu').classList.remove('show');
+    }
+
+    // Закрытие меню при клике вне его области
+    window.onclick = function(event) {
+      if (!event.target.matches('.menu-icon') && !event.target.matches('.menu-icon span')) {
+        const dropdown = document.getElementById('dropdownMenu');
+        if (dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
         }
-
-        // Switch tabs
-        function openTab(evt, tabName) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(button => button.classList.remove('active'));
-
-            document.getElementById(tabName).classList.add('active');
-            evt.currentTarget.classList.add('active');
-
-            // Close menu after selection
-            document.getElementById('dropdownMenu').classList.remove('show');
-        }
-
-        // Close menu when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-icon') && !event.target.matches('.menu-icon span')) {
-                const dropdown = document.getElementById('dropdownMenu');
-                if (dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
-                }
-            }
-        }
-    </script>
+      }
+    }
+  </script>
 
 </body>
 </html>
